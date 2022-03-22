@@ -1,4 +1,7 @@
+#include "MinesweeperBoard.hpp"
+
 int main()
 {
-    return 0;
+    MinesweeperBoard M(10,10,GameMode::EASY);
+    M.debug_display();
 }

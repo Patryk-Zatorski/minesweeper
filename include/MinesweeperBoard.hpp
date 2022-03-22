@@ -27,7 +27,11 @@ class MinesweeperBoard
 {
 private:
 // you are free to implement PRIVATE section in any way you want
-
+std::vector<std::vector<Field>> board;
+int height;
+int width;
+int mineCount;
+GameState stateOfTheGame;
 public:
   // generate a width*height sized board with the number of mines that depend on GameMode:
   // - EASY   - 10% of game fields with mines (random)
