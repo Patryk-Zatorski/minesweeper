@@ -8,6 +8,7 @@ using namespace std;
 
 MinesweeperBoard::MinesweeperBoard(int width, int height, GameMode mode)
 {
+    this->stateOfTheGame=GameState::RUNNING;
     this->height=height;
     this->width=width;
     for(int i=0; i<height;i++)
@@ -140,7 +141,7 @@ void MinesweeperBoard::revealField(int row, int col)
         {
             if(this->stateOfTheGame==GameState::RUNNING)
             {
-                if(this->board[row][col].hasFlag==1)
+                if(this->board[row][col].hasFlag!=1)
                 {
                     this->board[row][col].isRevealed=1;
                 }

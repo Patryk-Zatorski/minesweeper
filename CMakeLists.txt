@@ -13,7 +13,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(googletest)
 
-add_library(minesweeper_core src/MinesweeperBoard.cpp)
+add_library(minesweeper_core src/MinesweeperBoard.cpp src/MSBoardTextView.cpp)
 target_include_directories(minesweeper_core PUBLIC include)
 
 add_executable(sample_test tests/MinesweeperTests.cpp)
