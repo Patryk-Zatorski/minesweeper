@@ -100,14 +100,14 @@ int MinesweeperBoard::countMines(int row, int col) const
 {
     if(row>this->height||col>this->width){return -1;}
     int amount=0;
-    if(this->board[row-1][col-1].hasMine){amount++;}
-    if(this->board[row-1][col].hasMine){amount++;}
-    if(this->board[row-1][col+1].hasMine){amount++;}
-    if(this->board[row][col+1].hasMine){amount++;}
-    if(this->board[row+1][col+1].hasMine){amount++;}
-    if(this->board[row+1][col].hasMine){amount++;}
-    if(this->board[row+1][col-1].hasMine){amount++;}
-    if(this->board[row][col-1].hasMine){amount++;}
+    if(row>0&&col>0){if(this->board[row-1][col-1].hasMine){amount++;}}
+    if(row>0){if(this->board[row-1][col].hasMine){amount++;}}
+    if(row>0&&col<this->width-1){if(this->board[row-1][col+1].hasMine){amount++;}}
+    if(col<this->width-1){if(this->board[row][col+1].hasMine){amount++;}}
+    if(col<this->width-1&&row<this->height-1){if(this->board[row+1][col+1].hasMine){amount++;}}
+    if(row<this->height-1){if(this->board[row+1][col].hasMine){amount++;}}
+    if(row<this->height-1&&col>0){if(this->board[row+1][col-1].hasMine){amount++;}}
+    if(col>0){if(this->board[row][col-1].hasMine){amount++;}}
     return amount;
 }
 
@@ -127,7 +127,8 @@ void MinesweeperBoard::toggleFlag(int row, int col)
         {
             if(this->stateOfTheGame==GameState::RUNNING)
             {
-                this->board[row][col].hasFlag=1;
+                if(this->hasFlag(row,col)==1){this->board[row][col].hasFlag=0;}
+                else{this->board[row][col].hasFlag=1;}
             }
         }
     }
@@ -144,6 +145,18 @@ void MinesweeperBoard::revealField(int row, int col)
                 if(this->board[row][col].hasFlag!=1)
                 {
                     this->board[row][col].isRevealed=1;
+                    //if field neighbours no bombs, reveals fields around it
+                    if(this->countMines(row,col)==0)
+                    {
+                        if(row>0&&col>0){this->revealField(row-1,col-1);}
+                        if(row>0){this->revealField(row-1,col);}
+                        if(row>0&&col<this->width-1){this->revealField(row-1,col+1);}
+                        if(col<this->width-1){this->revealField(row,col+1);}
+                        if(col<this->width-1&&row<this->height-1){this->revealField(row+1,col+1);}
+                        if(row<this->height-1){this->revealField(row+1,col);}
+                        if(row<this->height-1&&col>0){this->revealField(row+1,col-1);}
+                        if(col>0){this->revealField(row,col-1);}
+                    }
                 }
             }
         }

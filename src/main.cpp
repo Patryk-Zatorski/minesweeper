@@ -1,16 +1,16 @@
 #include "MinesweeperBoard.hpp"
 #include "MSBoardTextView.hpp"
+#include "MSTextController.hpp"
 #include <iostream>
 
 using namespace std;
 
 int main()
 {
-    MinesweeperBoard M(20,10,GameMode::EASY);
-    M.debug_display();
+    MinesweeperBoard M(9,9,GameMode::EASY);
     MSBoardTextView view(M);
-    view.display();
-    M.revealField(5,0);
-    cout<<"#############################"<<endl;
-    view.display();
+    M.debug_display();
+    M.countMines(2,2);
+    MSTextController controller(M,view);
+    controller.play();
 }
